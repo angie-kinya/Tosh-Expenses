@@ -30,8 +30,8 @@ public class ExpenseService {
                 .toList();
     }
 
-    //public List<Expense> getAllExpenses() {
-     //   return expenseRepository.findAll();
-    //}
+    public List<Expense> getAllExpenses() {
+        return expenseRepository.findAll();
+    }
 
 }

@@ -1,0 +1,28 @@
+.welcome {
+    text-align: center;
+    padding: 2rem;
+}
+
+.member-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.btn {
+    display: inline-block;
+    margin: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    background-color: #38018c;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: #3700b3;
+    cursor: pointer;
+}

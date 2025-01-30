@@ -1,0 +1,28 @@
+.add-expense-container {
+    padding: 2rem;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    margin: 0.5rem 0;
+}
+
+input {
+    margin-left: 0.5rem;
+    padding: 0.5rem;
+}
+
+button {
+    margin-top: 1rem;
+    padding: 0.7rem 1.5rem;
+    background-color: #003366;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
