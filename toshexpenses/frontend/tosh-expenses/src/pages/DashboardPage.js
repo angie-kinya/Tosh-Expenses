@@ -1,64 +1,46 @@
-import React, { useRef, useEffect } from 'react';
-import { Bar } from 'react-chartjs-2';
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend,
-} from 'chart.js';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-// Register required components
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+const Dashboard = () => {
+    const [dashboardData, setDashboardData] = useState({
+        totalUsers: '',
+        totalExpenses: '',
+        categorySummaries: '',
+        totalAmount: '',
+    });
 
-const DashboardPage = () => {
-    const chartRef = useRef(null); // Reference to the chart instance
-
-    //dummy data
-    const data = {
-        labels: ['January', 'February', 'March', 'April', 'May'], // Update dynamically
-        datasets: [
-            {
-                label: 'Your Expenses',
-                data: [400, 500, 450, 600, 700], // Will be replaced with API data
-                backgroundColor: 'rgba(0, 51, 102, 0.7)',
-            },
-        ],
-    };
-
-    // Ensure clean up when the component unmounts by destroying the previous canvas
     useEffect(() => {
-        return () => {
-            // Destroy the chart instance if it exists
-            if (chartRef.current) {
-                chartRef.current.destroy();
+        const fetchDashboardData = async () => {
+            try {
+                const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080'}/api/dashboard`);
+                setDashboardData(response.data);
+            } catch (error) {
+                console.error("Failed to fetch dashboard data:", error);
             }
         };
+
+        fetchDashboardData();
     }, []);
 
+    if (!dashboardData) {
+        return <p>Loading dashboard...</p>;
+    }
+
     return (
-        <div>
+        <div className="dashboard">
             <h2>Dashboard</h2>
-            <Bar
-                data={data}
-                ref={chartRef}
-                options={{
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        title: {
-                            display: true,
-                            text: 'Monthly Expense Comparison',
-                        },
-                    },
-                }}
-            />
+            <p>Total Users: {dashboardData.totalUsers}</p>
+            <p>Total Expenses: {dashboardData.totalExpenses}</p>
+            <h3>Expenses by Category:</h3>
+            {/*<ul>*/}
+            {/*    {dashboardData.categorySummaries.map((summary) => (*/}
+            {/*        <li key={summary.category}>*/}
+            {/*            {summary.category}: {summary.totalAmount}*/}
+            {/*        </li>*/}
+            {/*    ))}*/}
+            {/*</ul>*/}
         </div>
     );
 };
 
-export default DashboardPage;
+export default Dashboard;
